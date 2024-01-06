@@ -9,7 +9,7 @@ interface board {
 }
 
 function App() {
-  const boardValue = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
+  const boardValue = makeBoard(4);
   const [board, setBoard] = useState<board>({
       board: boardValue,
       turn: "X",
@@ -18,6 +18,17 @@ function App() {
     }
   )
 
+  function makeBoard(size: number) {
+    let list = [];
+    for (let i = 0; i < size; i++) {
+      let list2 = [];
+      for (let j = 0; j < size; j++) {
+        list2.push(" ");
+      }
+      list.push(list2);
+    }
+    return list;
+  }
   function handleChangeState(index: number, index2: number) {
     let copy = {... board};
     if (copy.board[index][index2] == " " && copy.turn == "X") {
