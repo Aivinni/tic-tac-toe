@@ -1,0 +1,22 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  color: black;
+}
+
+.box {
+  height: 100px;
+  width: 100px;
+  background-color: bisque;
+  color: brown;
+
+  border-width: 1px;
+  border-color: black;
+  border-style: solid; 
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
