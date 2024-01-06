@@ -2,15 +2,16 @@ import { useState } from 'react'
 import './App.css'
 
 interface board {
-  board: [[string, string, string], [string, string, string], [string, string, string]];
+  board: string[][];
   turn: string;
   won: boolean;
   winner: string;
 }
 
 function App() {
+  const boardValue = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
   const [board, setBoard] = useState<board>({
-      board: [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]],
+      board: boardValue,
       turn: "X",
       won: false,
       winner: " ",
@@ -30,36 +31,64 @@ function App() {
     setBoard(copy);
   }
   function checkVictor(copy: board) {
-    // Horizontal Victory
-    for (const row of copy.board) {
-      if (row[0] == row[1] && row[0] == row[2] && row[0] != " ") {
-        copy.winner = row[0];
+    if (!board.won) {
+      // Horizontal Victory
+      let victory = true;
+      for (const row of copy.board) {
+        victory = true;
+        for (let i = 1; i < copy.board[0].length; i++) {
+          if (row[i - 1] != row[i] || row[i] == " ") {
+            victory = false;
+          }
+        }
+        if (victory) {
+          copy.winner = row[0];
+          copy.won = true;
+        }
+      }
+
+      // Vertical Victory
+      for (let i = 0; i < copy.board[0].length; i++) {
+        victory = true;
+        for (let j = 1; j < copy.board.length; j++) {
+          if (copy.board[j - 1][i] != copy.board[j][i] || copy.board[j][i] == " ") {
+            victory = false;
+          }
+        }
+        if (victory) {
+          copy.winner = copy.board[0][i];
+          copy.won = true;
+        }
+      }
+
+      // Diagonal victory
+      victory = true;
+      for (let i = 1; i < copy.board.length; i++) {
+        if (copy.board[i - 1][i - 1] != copy.board[i][i] || copy.board[i][i] == " ") {
+          victory = false;
+        }
+      }
+      if (victory) {
+        copy.winner = copy.board[0][0];
+        copy.won = true;
+      }
+      victory = true;
+      for (let i = 1; i < copy.board.length; i++) {
+        if (copy.board[i - 1][copy.board.length - i] != copy.board[i][copy.board.length - (i + 1)] || copy.board[i][copy.board.length - (i + 1)] == " ") {
+          victory = false;
+        }
+      }
+      if (victory) {
+        copy.winner = copy.board[0][copy.board.length - 1];
         copy.won = true;
       }
     }
 
-    // Vertical Victory
-    for (let i = 0; i < copy.board[0].length; i++) {
-      if (copy.board[0][i] == copy.board[1][i] && copy.board[0][i] == copy.board[2][i] && copy.board[0][i] != " ") {
-        copy.winner = copy.board[0][i];
-        copy.won = true;
-      }
-    }
-
-    // Diagonal victory
-    if (copy.board[0][0] == copy.board[1][1] && copy.board[0][0] == copy.board[2][2] && copy.board[0][0] != " ") {
-      copy.winner = copy.board[0][0];
-      copy.won = true;
-    }
-    if (copy.board[0][2] == copy.board[1][1] && copy.board[0][2] == copy.board[2][0] && copy.board[0][2] != " ") {
-      copy.winner = copy.board[0][2];
-      copy.won = true;
-    }
     return copy;
   }
   function handleClear() {
     const copy = {... board};
-    copy.board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
+    copy.board = boardValue;
     copy.turn = "X";
     copy.won = false;
     copy.winner = " "
@@ -82,6 +111,7 @@ function App() {
         <p>{board.turn} to move (click any empty tile)</p>
       }
       <button onClick={() => handleClear()}>Reset</button>
+
     </>
   )
 }

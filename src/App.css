@@ -11,6 +11,7 @@
   width: 100px;
   background-color: bisque;
   color: brown;
+  
 
   border-width: 1px;
   border-color: black;
@@ -19,4 +20,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: background-color 0.3s ease;
+}
+
+.box:hover {
+  background-color: lightblue; /* Change the background color on hover */
 }
