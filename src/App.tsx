@@ -51,7 +51,7 @@ function App() {
       copy.winner = copy.board[0][0];
       copy.won = true;
     }
-    if (copy.board[0][2] == copy.board[1][1] && copy.board[0][0] == copy.board[2][0] && copy.board[0][2] != " ") {
+    if (copy.board[0][2] == copy.board[1][1] && copy.board[0][2] == copy.board[2][0] && copy.board[0][2] != " ") {
       copy.winner = copy.board[0][2];
       copy.won = true;
     }
